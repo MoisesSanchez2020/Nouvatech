@@ -1,22 +1,25 @@
 <?php
-// === NouvaTech Contact Form Handler ===
+// ---------------------------------------------
+// NouvaTech - Home Contact Form Email Handler
+// ---------------------------------------------
 
-// Configure your recipient email
-$to = "info@nouvatech.com"; // 🔧 change to your real business email
+// 1. Email destino
+$to = "info@nouvatech.com";
 $subject = "New Tech Evaluation Request";
 
-// Sanitize user input
-$name = htmlspecialchars($_POST['name'] ?? '');
-$email = htmlspecialchars($_POST['email'] ?? '');
-$phone = htmlspecialchars($_POST['phone'] ?? '');
+// 2. Capturar datos del form
+$name    = htmlspecialchars($_POST['name'] ?? '');
+$email   = htmlspecialchars($_POST['email'] ?? '');
+$phone   = htmlspecialchars($_POST['phone'] ?? '');
 $message = htmlspecialchars($_POST['message'] ?? '');
 
+// Validación rápida
 if (!$name || !$email || !$message) {
-  echo "error";
-  exit;
+    echo "error";
+    exit;
 }
 
-// Build the email content
+// 3. Construir el mensaje en HTML
 $body = "
   <h2>New Tech Evaluation Form Submission</h2>
   <p><strong>Name:</strong> {$name}</p>
@@ -27,15 +30,16 @@ $body = "
   <p>Sent from NouvaTech website contact form</p>
 ";
 
-// Headers
+// 4. Headers correctos y compatibles con SPF
 $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-$headers .= "From: {$name} <{$email}>\r\n";
+$headers .= "From: NouvaTech Website <info@nouvatech.com>\r\n";
+$headers .= "Reply-To: {$email}\r\n";
 
-// Send email
+// 5. Enviar correo
 if (mail($to, $subject, $body, $headers)) {
-  echo "success"; // ✅ JS checks for this
+    echo "success";
 } else {
-  echo "error";
+    echo "error";
 }
 ?>

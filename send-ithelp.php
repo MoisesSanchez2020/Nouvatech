@@ -1,75 +1,90 @@
 <?php
-// send-ithelp.php — handles the contact form and returns JSON
-header('Content-Type: application/json; charset=utf-8');
+header('Content-Type: application/json');
 
-try {
-  // Only allow POST
-  if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+// Only allow POST
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    echo json_encode(["success" => false, "error" => "Invalid request method"]);
     exit;
-  }
-
-  // === CONFIG ===
-  $to = "info@nouvatech.com"; // <-- change to your destination inbox
-  $subject = "NouvaTech Contact Request";
-
-  // === SANITIZE INPUTS ===
-  $name = htmlspecialchars(trim($_POST['name'] ?? ''));
-  $email = htmlspecialchars(trim($_POST['email'] ?? ''));
-  $phone = htmlspecialchars(trim($_POST['phone'] ?? ''));
-  $message = htmlspecialchars(trim($_POST['message'] ?? ''));
-  $services = $_POST['services'] ?? [];
-
-  // === VALIDATION ===
-  $errors = [];
-  if ($name === "") $errors[] = "Name is required";
-  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Valid email required";
-  if ($phone === "") $errors[] = "Phone number is required";
-
-  if ($errors) {
-    http_response_code(422);
-    echo json_encode(['success' => false, 'message' => implode(", ", $errors)]);
-    exit;
-  }
-
-  // === BUILD MESSAGE ===
-  $serviceList = "";
-  if (!empty($services)) {
-    $serviceList = "<ul>";
-    foreach ($services as $service) {
-      $serviceList .= "<li>" . htmlspecialchars($service) . "</li>";
-    }
-    $serviceList .= "</ul>";
-  }
-
-  $body = "
-    <h2>New IT Help Request</h2>
-    <p><strong>Name:</strong> $name</p>
-    <p><strong>Email:</strong> $email</p>
-    <p><strong>Phone:</strong> $phone</p>
-    <p><strong>Services:</strong> $serviceList</p>
-    <p><strong>Message:</strong><br>" . nl2br($message) . "</p>
-  ";
-
-  $headers = [
-    "From: NouvaTech Website <no-reply@nouvatech.com>",
-    "Reply-To: $email",
-    "MIME-Version: 1.0",
-    "Content-Type: text/html; charset=UTF-8"
-  ];
-
-  // === SEND EMAIL ===
-  $sent = @mail($to, $subject, $body, implode("\r\n", $headers));
-
-  if ($sent) {
-    echo json_encode(['success' => true]);
-  } else {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Mail failed to send.']);
-  }
-
-} catch (Throwable $e) {
-  http_response_code(500);
-  echo json_encode(['success' => false, 'message' => 'Server error.']);
 }
+
+/* ================= RECAPTCHA VALIDATION ================= */
+
+// 🔒 Replace with your actual secret key
+$secretKey = "6Ld2LmQsAAAAAC0Eph2AdAEvigZr_C0ZAATk1kOg";
+
+$captcha = $_POST['g-recaptcha-response'] ?? '';
+
+if (empty($captcha)) {
+    echo json_encode(["success" => false, "error" => "Captcha missing"]);
+    exit;
+}
+
+// Verify with Google
+$verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+$verifyResponse = file_get_contents($verifyUrl . "?secret=" . urlencode($secretKey) . "&response=" . urlencode($captcha));
+
+if ($verifyResponse === false) {
+    echo json_encode(["success" => false, "error" => "Captcha verification failed"]);
+    exit;
+}
+
+$responseData = json_decode($verifyResponse);
+
+if (!$responseData || !$responseData->success) {
+    echo json_encode(["success" => false, "error" => "Captcha failed"]);
+    exit;
+}
+
+/* ================= FORM VALIDATION ================= */
+
+$name    = trim($_POST['name'] ?? '');
+$email   = trim($_POST['email'] ?? '');
+$phone   = trim($_POST['phone'] ?? '');
+$message = trim($_POST['message'] ?? '');
+$solutions = $_POST['solutions'] ?? [];
+
+if (empty($name) || empty($email) || empty($phone) || empty($message)) {
+    echo json_encode(["success" => false, "error" => "Missing required fields"]);
+    exit;
+}
+
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["success" => false, "error" => "Invalid email address"]);
+    exit;
+}
+
+// Prevent email header injection
+$email = str_replace(["\r", "\n"], '', $email);
+
+// Sanitize checkbox values
+$solutions = is_array($solutions) ? array_map('strip_tags', $solutions) : [];
+$solutionsText = !empty($solutions) ? implode(', ', $solutions) : 'None selected';
+
+/* ================= EMAIL PREPARATION ================= */
+
+$to = "info@nouvatech.com";
+$subject = "New IT Assessment Request";
+
+$body = "New IT Assessment Request\n\n";
+$body .= "Name: {$name}\n";
+$body .= "Email: {$email}\n";
+$body .= "Phone: {$phone}\n";
+$body .= "Solutions: {$solutionsText}\n\n";
+$body .= "Message:\n{$message}\n";
+
+$headers = "From: noreply@nouvatech.com\r\n";
+$headers .= "Reply-To: {$email}\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+/* ================= SEND EMAIL ================= */
+
+if (!mail($to, $subject, $body, $headers)) {
+    echo json_encode(["success" => false, "error" => "Mail delivery failed"]);
+    exit;
+}
+
+/* ================= SUCCESS ================= */
+
+echo json_encode(["success" => true]);
+exit;

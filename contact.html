@@ -1,328 +1,723 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NouvaTech | Free IT Assessment</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NouvaTech | Free IT Assessment</title>
 
-  <style>
-    :root{
-      --nt-blue:#0073ff;
-      --nt-blue-d:#0b162b;
-      --nt-text:#111;
-      --nt-muted:#555;
-      --nt-bg1:#f4f8ff;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      font-family: "Plus Jakarta Sans", "Mulish", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: linear-gradient(180deg, var(--nt-bg1) 0%, #ffffff 100%);
-      color: var(--nt-text);
-      margin:0;
-    }
+    <!-- ✅ reCAPTCHA script (solo una vez) -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    /* ---------------- HEADER ---------------- */
-    header{position:sticky; top:0; z-index:1000}
+    <style>
+      :root {
+        --nt-blue: #0073ff;
+        --nt-blue-d: #0b162b;
+        --nt-text: #111;
+        --nt-muted: #555;
+        --nt-bg1: #f4f8ff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          "Plus Jakarta Sans",
+          "Mulish",
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        background: linear-gradient(180deg, var(--nt-bg1) 0%, #ffffff 100%);
+        color: var(--nt-text);
+        margin: 0;
+      }
 
-    /* Topbar */
-    .topbar{
-      background: var(--nt-blue-d);
-      color:#fff;
-      font-size:14px;
-    }
-    .topbar .wrap{
-      max-width:1200px; margin:0 auto;
-      padding:8px 20px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .topbar .left, .topbar .right{display:flex; align-items:center; gap:18px}
-    .topbar .icon{
-      width:18px; height:18px; vertical-align:middle; margin-right:6px;
-    }
-    .topbar a{color:#cfe3ff; text-decoration:none}
-    .topbar a:hover{color:#fff}
+      /* ---------------- HEADER ---------------- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
-    /* Main nav */
-    .nav{
-      background:#fff; border-bottom:1px solid rgba(0,0,0,.06);
-      box-shadow: 0 1px 8px rgba(0,0,0,.06);
-    }
-    .nav .wrap{
-      max-width:1200px; margin:0 auto;
-      padding:12px 20px;
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
-    }
-    .logo img{height:48px; display:block}
-    .menu{display:flex; gap:28px; list-style:none; margin:0; padding:0}
-    .menu a{
-      color:#111; text-decoration:none; font-weight:600; position:relative; padding:6px 0;
-      transition:color .25s;
-    }
-    .menu a:hover{color:var(--nt-blue)}
-    .menu a.active::after{
-      content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px; background:var(--nt-blue); border-radius:2px;
-    }
+      /* Topbar */
+      .topbar {
+        background: var(--nt-blue-d);
+        color: #fff;
+        font-size: 14px;
+      }
+      .topbar .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 8px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .topbar .left,
+      .topbar .right {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .topbar .icon {
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      .topbar a {
+        color: #cfe3ff;
+        text-decoration: none;
+      }
+      .topbar a:hover {
+        color: #fff;
+      }
 
-    /* Phone pill (no CTA button) */
-    .phone-pill{
-      display:flex; align-items:center; gap:10px; text-decoration:none;
-    }
-    .phone-circle{
-      width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-      background:#eef5fb;
-      box-shadow: 0 2px 6px rgba(0,115,255,.15);
-    }
-    .phone-circle svg{width:20px; height:20px; fill:var(--nt-blue)}
-    .phone-text{display:flex; flex-direction:column; line-height:1.1}
-    .phone-text .cap{font-size:11px; text-transform:uppercase; color:#6b7280}
-    .phone-text .num{font-weight:800; color:var(--nt-blue)}
+      /* Main nav */
+      .nav {
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+      }
+      .nav .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .logo img {
+        height: 48px;
+        display: block;
+      }
+      .menu {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .menu a {
+        color: #111;
+        text-decoration: none;
+        font-weight: 600;
+        position: relative;
+        padding: 6px 0;
+        transition: color 0.25s;
+      }
+      .menu a:hover {
+        color: var(--nt-blue);
+      }
+      .menu a.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        height: 2px;
+        background: var(--nt-blue);
+        border-radius: 2px;
+      }
 
-    /* Mobile */
-    .burger{display:none; cursor:pointer; border:0; background:transparent; padding:8px}
-    .burger svg{width:26px; height:26px}
-    @media (max-width: 980px){
-      .menu{display:none; position:absolute; top:100%; left:0; right:0; background:#fff; padding:14px 20px; border-bottom:1px solid rgba(0,0,0,.06)}
-      .menu.open{display:flex; flex-direction:column; gap:14px}
-      .burger{display:block}
-      .phone-pill{display:none}
-    }
+      /* Phone pill (no CTA button) */
+      .phone-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .phone-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef5fb;
+        box-shadow: 0 2px 6px rgba(0, 115, 255, 0.15);
+      }
+      .phone-circle svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--nt-blue);
+      }
+      .phone-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+      .phone-text .cap {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #6b7280;
+      }
+      .phone-text .num {
+        font-weight: 800;
+        color: var(--nt-blue);
+      }
 
-    /* ---------------- FORM SECTION ---------------- */
-    section{
-      display:flex; justify-content:center; align-items:center;
-      padding:100px 20px;
-      background: radial-gradient(circle at top right, var(--nt-bg1), #ffffff);
-    }
-    .consultation-card{
-      background:#fff; border:1px solid #e0e7f1; border-radius:20px;
-      padding:60px 55px; max-width:900px; width:100%;
-      box-shadow:0 15px 45px rgba(0,30,80,.08);
-      animation:fadeIn .8s ease forwards; text-align:center;
-    }
-    @keyframes fadeIn{from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)}}
-    h2{font-weight:800; color:var(--nt-blue-d); font-size:32px; margin:0 0 16px}
-    h3{font-weight:700; color:var(--nt-blue); margin:40px 0 8px}
-    p.subtitle{color:#444; margin:0 0 18px; line-height:1.75; font-size:16px}
+      /* Mobile */
+      .burger {
+        display: none;
+        cursor: pointer;
+        border: 0;
+        background: transparent;
+        padding: 8px;
+      }
+      .burger svg {
+        width: 26px;
+        height: 26px;
+      }
+      @media (max-width: 980px) {
+        .menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          padding: 14px 20px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .menu.open {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .burger {
+          display: block;
+        }
+        .phone-pill {
+          display: none;
+        }
+      }
 
-    /* Features */
-    .feature-grid{
-      display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap:26px; margin:32px 0 42px;
-    }
-    .feature-item{
-      background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-      border:1px solid #cfe0ff; border-radius:16px; padding:24px 20px; text-align:center;
-      box-shadow:0 0 20px rgba(0,115,255,.06); transition:.3s transform, .3s box-shadow;
-    }
-    .feature-item:hover{transform:translateY(-6px); box-shadow:0 10px 28px rgba(0,115,255,.15)}
-    .feature-item svg{width:36px; height:36px; margin-bottom:10px}
-    .feature-item h4{font-size:18px; font-weight:700; color:#0b162b; margin:6px 0 6px}
-    .feature-item p{color:#555; font-size:15px; line-height:1.6}
+      /* ---------------- FORM SECTION ---------------- */
+      section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 20px;
+        background: radial-gradient(
+          circle at top right,
+          var(--nt-bg1),
+          #ffffff
+        );
+      }
+      .consultation-card {
+        background: #fff;
+        border: 1px solid #e0e7f1;
+        border-radius: 20px;
+        padding: 60px 55px;
+        max-width: 900px;
+        width: 100%;
+        box-shadow: 0 15px 45px rgba(0, 30, 80, 0.08);
+        animation: fadeIn 0.8s ease forwards;
+        text-align: center;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      h2 {
+        font-weight: 800;
+        color: var(--nt-blue-d);
+        font-size: 32px;
+        margin: 0 0 16px;
+      }
+      h3 {
+        font-weight: 700;
+        color: var(--nt-blue);
+        margin: 40px 0 8px;
+      }
+      p.subtitle {
+        color: #444;
+        margin: 0 0 18px;
+        line-height: 1.75;
+        font-size: 16px;
+      }
 
-    .divider{border:none; height:1px; background:rgba(0,0,0,.08); margin:28px 0}
+      /* Features */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 26px;
+        margin: 32px 0 42px;
+      }
+      .feature-item {
+        background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+        border: 1px solid #cfe0ff;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 115, 255, 0.06);
+        transition:
+          0.3s transform,
+          0.3s box-shadow;
+      }
+      .feature-item:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 28px rgba(0, 115, 255, 0.15);
+      }
+      .feature-item svg {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 10px;
+      }
+      .feature-item h4 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0b162b;
+        margin: 6px 0 6px;
+      }
+      .feature-item p {
+        color: #555;
+        font-size: 15px;
+        line-height: 1.6;
+      }
 
-    /* Form */
-    form{text-align:left}
-    .form-control, textarea{
-      width:100%; border-radius:10px; border:1px solid #ccd6e0; font-size:15px;
-      padding:14px 16px; margin-bottom:14px; transition:border-color .2s, box-shadow .2s; background:#fafcff;
-    }
-    .form-control:focus, textarea:focus{border-color:var(--nt-blue); outline:none; box-shadow:0 0 0 4px rgba(0,115,255,.1); background:#fff}
-    label{font-weight:600; color:#0b162b; font-size:15px; margin:8px 0 6px; display:inline-block}
-    .checkbox-group{display:flex; flex-direction:column; gap:10px; margin-bottom:18px}
-    .checkbox-group label{display:flex; align-items:center; gap:10px; font-size:15px; color:#333; cursor:pointer}
-    .checkbox-group input[type="checkbox"]{accent-color:var(--nt-blue); width:18px; height:18px}
-    .button-wrapper{text-align:center; margin-top:26px}
-    .wc-btn{
-      background: linear-gradient(90deg, var(--nt-blue) 0%, #005fd1 100%);
-      color:#fff; font-weight:800; border:0; border-radius:999px; padding:15px 34px; font-size:16px; cursor:pointer;
-      transition:.25s transform, .25s box-shadow, .25s opacity; box-shadow:0 6px 16px rgba(0,115,255,.35);
-    }
-    .wc-btn:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,115,255,.45)}
-    .form-text{font-size:12px; color:#6b7280; margin-top:-6px; margin-bottom:10px}
+      .divider {
+        border: none;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.08);
+        margin: 28px 0;
+      }
 
-    footer{text-align:center; padding:24px; background:#fff; color:#777; border-top:1px solid rgba(0,0,0,.05); font-size:14px}
+      /* Form */
+      form {
+        text-align: left;
+      }
+      .form-control,
+      textarea {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid #ccd6e0;
+        font-size: 15px;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        background: #fafcff;
+      }
+      .form-control:focus,
+      textarea:focus {
+        border-color: var(--nt-blue);
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(0, 115, 255, 0.1);
+        background: #fff;
+      }
+      label {
+        font-weight: 600;
+        color: #0b162b;
+        font-size: 15px;
+        margin: 8px 0 6px;
+        display: inline-block;
+      }
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .checkbox-group label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        color: #333;
+        cursor: pointer;
+      }
+      .checkbox-group input[type="checkbox"] {
+        accent-color: var(--nt-blue);
+        width: 18px;
+        height: 18px;
+      }
+      .button-wrapper {
+        text-align: center;
+        margin-top: 26px;
+      }
+      .wc-btn {
+        background: linear-gradient(90deg, var(--nt-blue) 0%, #005fd1 100%);
+        color: #fff;
+        font-weight: 800;
+        border: 0;
+        border-radius: 999px;
+        padding: 15px 34px;
+        font-size: 16px;
+        cursor: pointer;
+        transition:
+          0.25s transform,
+          0.25s box-shadow,
+          0.25s opacity;
+        box-shadow: 0 6px 16px rgba(0, 115, 255, 0.35);
+      }
+      .wc-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0, 115, 255, 0.45);
+      }
+      .form-text {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: -6px;
+        margin-bottom: 10px;
+      }
 
-    @media (max-width: 768px){
-      .consultation-card{padding:36px 24px}
-      h2{font-size:26px}
-      .wc-btn{width:100%}
-    }
-  </style>
-</head>
-<body>
+      footer {
+        text-align: center;
+        padding: 24px;
+        background: #fff;
+        color: #777;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        font-size: 14px;
+      }
 
-  <!-- ======================= HEADER ======================= -->
-  <header>
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="wrap">
-        <div class="left">
-          <span>
-            <!-- mail icon -->
-            <svg class="icon" viewBox="0 0 24 24" fill="#cfe3ff" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
-            <a href="mailto:info@nouvatech.com">info@nouvatech.com</a>
-          </span>
-         
+      @media (max-width: 768px) {
+        .consultation-card {
+          padding: 36px 24px;
+        }
+        h2 {
+          font-size: 26px;
+        }
+        .wc-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ======================= HEADER ======================= -->
+    <header>
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="wrap">
+          <div class="left">
+            <span>
+              <!-- mail icon -->
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                fill="#cfe3ff"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"
+                />
+              </svg>
+              <a href="mailto:info@nouvatech.com">info@nouvatech.com</a>
+            </span>
+          </div>
+          <div class="right">
+            <a
+              class="phone-pill"
+              href="tel:+18778247272"
+              aria-label="Call NouvaTech"
+            >
+            </a>
+          </div>
         </div>
-        <div class="right">
-          <a class="phone-pill" href="tel:+18778247272" aria-label="Call NouvaTech">
-            
-            
+      </div>
+
+      <!-- Main Nav -->
+      <nav class="nav">
+        <div class="wrap">
+          <a class="logo" href="index.html">
+            <img
+              src="./assets/images/logo/newlogo.png"
+              alt="logo"
+              width="240"
+              style="height: auto"
+            />
+          </a>
+
+          <button class="burger" id="burger" aria-label="Open navigation">
+            <svg
+              viewBox="0 0 24 24"
+              fill="#111"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z" />
+            </svg>
+          </button>
+
+          <ul class="menu" id="menu">
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#services">IT Services</a></li>
+            <li><a href="/#process">Process</a></li>
+            <li><a href="/#pricing">Packages</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+
+          <!-- phone pill repeats on desktop; hidden on mobile via CSS -->
+          <a
+            class="phone-pill"
+            href="tel:+18778247272"
+            aria-label="Call NouvaTech"
+          >
+            <span class="phone-circle">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.28.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.38a1 1 0 0 1 1 1c0 1.32.2 2.5.57 3.6a1 1 0 0 1-.25 1l-2.1 2.2Z"
+                />
+              </svg>
+            </span>
+            <span class="phone-text">
+              <span class="cap">For Free Consultation</span>
+              <span class="num">877-824-7272</span>
+            </span>
           </a>
         </div>
+      </nav>
+    </header>
+
+    <!-- ======================= FORM SECTION ======================= -->
+    <section id="contact">
+      <div class="consultation-card">
+        <h2>Does your IT keep you up at night?</h2>
+        <p class="subtitle">
+          After completing the form, a specialist will schedule a consultation
+          to discuss your business goals and identify opportunities to improve
+          your technology strategy.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <!-- Shield icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill="#0073ff"
+                d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7Z"
+              />
+            </svg>
+            <h4>Uncover Security Risks</h4>
+            <p>
+              Identify and eliminate vulnerabilities across your IT and
+              communication systems before they impact your business.
+            </p>
+          </div>
+          <div class="feature-item">
+            <!-- Coins icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path
+                fill="#0073ff"
+                d="M12 3c3.87 0 7 1.12 7 2.5S15.87 8 12 8 5 6.88 5 5.5 8.13 3 12 3Zm7 5.5c0 .62-.73 1.18-1.94 1.56C15.74 10.6 13.93 11 12 11s-3.74-.4-5.06-.94C5.73 9.68 5 9.12 5 8.5V10c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V8.5Zm0 3c0 .62-.73 1.18-1.94 1.56C15.74 13.6 13.93 14 12 14s-3.74-.4-5.06-.94C5.73 12.68 5 12.12 5 11.5V13c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V11.5Zm0 3c0 1.38-3.13 2.5-7 2.5s-7-1.12-7-2.5V16c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V14.5Z"
+              />
+            </svg>
+            <h4>Reduce Operating Costs</h4>
+            <p>
+              Optimize software licenses and modernize infrastructure to save
+              time and money without compromising performance.
+            </p>
+          </div>
+          <div class="feature-item">
+            <!-- Bolt icon -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#0073ff" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z" />
+            </svg>
+            <h4>Boost Productivity</h4>
+            <p>
+              Empower your workforce through automation, collaboration tools,
+              and reliable connectivity.
+            </p>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <h3>Request Your Free IT Assessment</h3>
+        <p class="subtitle">
+          Our specialists will reach out shortly to design your personalized IT
+          improvement plan.
+        </p>
+
+        <form
+          id="integral-request-form"
+          action="send-ithelp.php"
+          method="POST"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Your name*"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            placeholder="Your email*"
+            required
+          />
+          <input
+            type="tel"
+            name="phone"
+            class="form-control"
+            placeholder="Your phone*"
+            required
+          />
+
+          <label>What solutions does your business need?*</label>
+          <div class="checkbox-group">
+            <label
+              ><input type="checkbox" name="solutions[]" value="IT Services" />
+              IT Services</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="solutions[]"
+                value="Copiers, Printers, Mail Machines, Applications"
+              />
+              Copiers, Printers, Mail Machines, Applications</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="solutions[]"
+                value="Video Conferencing, Phones, VoIP"
+              />
+              Video Conferencing, Phones, VoIP</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="solutions[]"
+                value="Security & Surveillance"
+              />
+              Security & Surveillance</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="solutions[]"
+                value="Digital Signage"
+              />
+              Digital Signage</label
+            >
+          </div>
+
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Describe your current IT challenges or goals*"
+            required
+          ></textarea>
+          <input
+            type="file"
+            name="attachment"
+            class="form-control"
+            accept=".pdf,.png,.jpg,.jpeg,.txt,.log,.csv,.doc,.docx,.xls,.xlsx"
+          />
+          <div class="form-text">
+            Attach a screenshot or document (optional, max 10 MB).
+          </div>
+
+          <!-- ✅ reCAPTCHA widget (solo uno, dentro del form) -->
+          <div
+            class="g-recaptcha"
+            data-sitekey="6Ld2LmQsAAAAALWJVh71O43kihe_eEvNADoSW8mN"
+          ></div>
+
+          <div class="button-wrapper">
+            <button type="submit" class="wc-btn">Submit Request</button>
+          </div>
+        </form>
       </div>
-    </div>
+    </section>
 
-    <!-- Main Nav -->
-    <nav class="nav">
-      <div class="wrap">
-        <a class="logo" href="index.html">
-          <img src="./assets/images/logo/nouva-logo.png" alt="NouvaTech logo">
-        </a>
+    <footer>
+      ©
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+      NouvaTech. All rights reserved.
+    </footer>
 
-        <button class="burger" id="burger" aria-label="Open navigation">
-          <svg viewBox="0 0 24 24" fill="#111" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
-        </button>
+    <!-- Mobile menu + form toast -->
+    <script>
+      // Mobile nav toggle
+      const burger = document.getElementById("burger");
+      const menu = document.getElementById("menu");
+      burger?.addEventListener("click", () => menu.classList.toggle("open"));
 
-        <ul class="menu" id="menu">
-          <li><a href="index.html#home">Home</a></li>
-          <li><a href="index.html#services">IT Services</a></li>
-          <li><a href="index.html#process">Process</a></li>
-          <li><a href="index.html#pricing">Packages</a></li>
-          <li><a href="index.html#about">About</a></li>
-          <li><a href="index.html#faq">FAQ</a></li>
-        </ul>
-
-        <!-- phone pill repeats on desktop; hidden on mobile via CSS -->
-        <a class="phone-pill" href="tel:+18778247272" aria-label="Call NouvaTech">
-          <span class="phone-circle">
-            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.28.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 8a1 1 0 0 1 1-1h3.38a1 1 0 0 1 1 1c0 1.32.2 2.5.57 3.6a1 1 0 0 1-.25 1l-2.1 2.2Z"/></svg>
-          </span>
-          <span class="phone-text">
-            <span class="cap">For Free Consultation</span>
-            <span class="num">877-824-7272</span>
-          </span>
-        </a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- ======================= FORM SECTION ======================= -->
-  <section id="contact">
-    <div class="consultation-card">
-      <h2>Does your IT keep you up at night?</h2>
-      <p class="subtitle">
-        After completing the form, a specialist will schedule a consultation to discuss your business goals and identify opportunities to improve your technology strategy.
-      </p>
-
-      <div class="feature-grid">
-        <div class="feature-item">
-          <!-- Shield icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#0073ff" d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l5.6-5.6L18 9l-7 7Z"/></svg>
-          <h4>Uncover Security Risks</h4>
-          <p>Identify and eliminate vulnerabilities across your IT and communication systems before they impact your business.</p>
-        </div>
-        <div class="feature-item">
-          <!-- Coins icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#0073ff" d="M12 3c3.87 0 7 1.12 7 2.5S15.87 8 12 8 5 6.88 5 5.5 8.13 3 12 3Zm7 5.5c0 .62-.73 1.18-1.94 1.56C15.74 10.6 13.93 11 12 11s-3.74-.4-5.06-.94C5.73 9.68 5 9.12 5 8.5V10c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V8.5Zm0 3c0 .62-.73 1.18-1.94 1.56C15.74 13.6 13.93 14 12 14s-3.74-.4-5.06-.94C5.73 12.68 5 12.12 5 11.5V13c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V11.5Zm0 3c0 1.38-3.13 2.5-7 2.5s-7-1.12-7-2.5V16c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5V14.5Z"/></svg>
-          <h4>Reduce Operating Costs</h4>
-          <p>Optimize software licenses and modernize infrastructure to save time and money without compromising performance.</p>
-        </div>
-        <div class="feature-item">
-          <!-- Bolt icon -->
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#0073ff" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
-          <h4>Boost Productivity</h4>
-          <p>Empower your workforce through automation, collaboration tools, and reliable connectivity.</p>
-        </div>
-      </div>
-
-      <hr class="divider" />
-      <h3>Request Your Free IT Assessment</h3>
-      <p class="subtitle">Our specialists will reach out shortly to design your personalized IT improvement plan.</p>
-
-      <form id="integral-request-form" action="send-ithelp.php" method="POST" enctype="multipart/form-data" novalidate>
-        <input type="text" name="name" class="form-control" placeholder="Your name*" required />
-        <input type="email" name="email" class="form-control" placeholder="Your email*" required />
-        <input type="tel" name="phone" class="form-control" placeholder="Your phone*" required />
-
-        <label>What solutions does your business need?*</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="solutions[]" value="IT Services" /> IT Services</label>
-          <label><input type="checkbox" name="solutions[]" value="Copiers, Printers, Mail Machines, Applications" /> Copiers, Printers, Mail Machines, Applications</label>
-          <label><input type="checkbox" name="solutions[]" value="Video Conferencing, Phones, VoIP" /> Video Conferencing, Phones, VoIP</label>
-          <label><input type="checkbox" name="solutions[]" value="Security & Surveillance" /> Security & Surveillance</label>
-          <label><input type="checkbox" name="solutions[]" value="Digital Signage" /> Digital Signage</label>
-        </div>
-
-        <textarea name="message" rows="4" placeholder="Describe your current IT challenges or goals*" required></textarea>
-        <input type="file" name="attachment" class="form-control" accept=".pdf,.png,.jpg,.jpeg,.txt,.log,.csv,.doc,.docx,.xls,.xlsx" />
-        <div class="form-text">Attach a screenshot or document (optional, max 10 MB).</div>
-
-        <div class="button-wrapper">
-          <button type="submit" class="wc-btn">Submit Request</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <footer>© <script>document.write(new Date().getFullYear())</script> NouvaTech. All rights reserved.</footer>
-
-  <!-- Mobile menu + form toast -->
-  <script>
-    // Mobile nav toggle
-    const burger = document.getElementById('burger');
-    const menu = document.getElementById('menu');
-    burger?.addEventListener('click', () => menu.classList.toggle('open'));
-
-    // Simple toast
-    const form = document.getElementById("integral-request-form");
-    const toast = document.createElement("div");
-    toast.id = "success-toast";
-    toast.style.cssText = `
+      // Simple toast
+      const form = document.getElementById("integral-request-form");
+      const toast = document.createElement("div");
+      toast.id = "success-toast";
+      toast.style.cssText = `
       position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
       background: linear-gradient(90deg, #0073ff, #005fd1);
       color: #fff; padding: 14px 20px; border-radius: 10px;
       font-weight: 700; box-shadow: 0 6px 20px rgba(0,115,255,.4);
       opacity: 0; transition: all .4s ease; z-index: 9999;
     `;
-    document.body.appendChild(toast);
+      document.body.appendChild(toast);
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      toast.textContent = "Submitting your request...";
-      toast.style.opacity = "1";
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-      const data = new FormData(form);
-      try {
-        const res = await fetch(form.action, { method: "POST", body: data });
-        // If your backend returns plain text instead of JSON, this try/catch will keep it graceful
-        let result = {};
-        try { result = await res.json(); } catch { result = { success: res.ok }; }
+        // ✅ Check reCAPTCHA completed
+        const recaptchaResponse = grecaptcha.getResponse();
+        if (!recaptchaResponse) {
+          toast.textContent = "⚠️ Please complete the reCAPTCHA.";
+          toast.style.background = "linear-gradient(90deg, #e74c3c, #c0392b)";
+          toast.style.opacity = "1";
+          setTimeout(() => (toast.style.opacity = "0"), 2800);
+          return;
+        }
 
-        if (result.success) {
-          toast.textContent = "✅ Your request was submitted successfully!";
-          toast.style.background = "linear-gradient(90deg, #28a745, #218838)";
-          form.reset();
-          setTimeout(() => { toast.style.opacity = "0"; }, 2500);
-        } else {
-          toast.textContent = "⚠️ There was an issue sending your request.";
+        toast.textContent = "Submitting your request...";
+        toast.style.background = "linear-gradient(90deg, #0073ff, #005fd1)";
+        toast.style.opacity = "1";
+
+        const data = new FormData(form);
+
+        try {
+          const res = await fetch(form.action, { method: "POST", body: data });
+          // If your backend returns plain text instead of JSON, this try/catch will keep it graceful
+          let result = {};
+          try {
+            result = await res.json();
+          } catch {
+            result = { success: res.ok };
+          }
+
+          if (result.success) {
+            toast.textContent = "✅ Your request was submitted successfully!";
+            toast.style.background = "linear-gradient(90deg, #28a745, #218838)";
+            form.reset();
+            grecaptcha.reset();
+            setTimeout(() => {
+              toast.style.opacity = "0";
+            }, 2500);
+          } else {
+            toast.textContent =
+              result.error || "⚠️ There was an issue sending your request.";
+            toast.style.background = "linear-gradient(90deg, #e74c3c, #c0392b)";
+            setTimeout(() => (toast.style.opacity = "0"), 2800);
+          }
+        } catch {
+          toast.textContent = "⚠️ Network error. Please try again.";
           toast.style.background = "linear-gradient(90deg, #e74c3c, #c0392b)";
           setTimeout(() => (toast.style.opacity = "0"), 2800);
         }
-      } catch {
-        toast.textContent = "⚠️ Network error. Please try again.";
-        toast.style.background = "linear-gradient(90deg, #e74c3c, #c0392b)";
-        setTimeout(() => (toast.style.opacity = "0"), 2800);
-      }
-    });
-  </script>
-
-
-
-
-
-
-</body>
+      });
+    </script>
+  </body>
 </html>
